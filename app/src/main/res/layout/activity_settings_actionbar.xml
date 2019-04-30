@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/settingsCancelButton"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="0dp"
+        android:background="@color/buttonTransparent"
+        android:text="Back"
+        android:textColor="#FFF" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical"
+        android:text="Settings"
+        android:textAlignment="center"
+        android:textColor="#FFF"
+        android:textSize="24sp" />
+
+
+    <Button
+        android:id="@+id/settingsSaveButton"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="0dp"
+        android:background="@color/buttonTransparent"
+        android:text="Save"
+        android:textColor="#FFF" />
+
+</RelativeLayout>

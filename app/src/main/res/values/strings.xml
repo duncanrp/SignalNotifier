@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SignalNotifier</string>
+    <string name="notificationChannelName">SignalNotifierNotificationChannel</string>
+</resources>

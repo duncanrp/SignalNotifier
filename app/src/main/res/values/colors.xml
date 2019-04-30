@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#f8981d</color>
+    <color name="colorPrimaryDark">#f15b40</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="buttonTransparent">#00000000</color>
+    <color name="colorButtonPrimary">#fffdfb</color>
+
+    <color name="spinnerBackground">#f1f1f1</color>
+    <color name="spinnerTint">#a9a9a9</color>
+
+
+
+</resources>

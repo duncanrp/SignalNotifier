@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    tools:context=".SettingsActivity">
+
+    <TextView
+        android:id="@+id/notificationSoundTxt"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="Notification Sound"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/notificationSoundLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/notificationSoundTxt">
+
+        <Spinner
+            android:id="@+id/notificationSoundNameSelector"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="None"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/selectNotificationSoundPreviewBtn"
+            style="@android:style/Widget.Button.Inset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/notificationSoundNameSelector"
+            android:backgroundTint="@color/colorButtonPrimary"
+            android:text="Play Sound" />
+
+
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/notificationPlayAmount"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_below="@id/notificationSoundLinearLayout"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="Notification Style"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/notificationStyleSelector"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/notificationPlayAmount" />
+
+
+</RelativeLayout>
