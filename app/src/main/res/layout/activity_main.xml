@@ -7,38 +7,51 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/subActivityLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <WebView
+            android:id="@+id/listeningHTML"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp" />
 
-            <TextView
-                android:id="@+id/listeningMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="25dp"
-                android:text="Listening for Signal..."
-                android:textAllCaps="false"
-                android:textSize="21sp"
-                app:fontFamily="sans-serif-thin" />
 
-            <Switch
-                android:id="@+id/enabledToggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="54dp"
-                android:layout_gravity="center"
-                android:checked="true"
-                android:scaleX="1.70"
-                android:scaleY="1.70"
-                android:switchMinWidth="100dp"
-                android:switchTextAppearance="@style/TextAppearance.AppCompat"
-                android:textOff="Activate"
-                android:textOn="Deactivate"
-                android:theme="@style/SwitchStyle" />
+        <TextView
+            android:id="@+id/listeningMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp"
+            android:text="Awaiting Signal..."
+            android:textAllCaps="false"
+            android:textSize="21sp"
+            app:fontFamily="sans-serif-thin" />
 
-        </LinearLayout>
+
+        <ToggleButton
+            android:id="@+id/enabledToggleButton"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:theme="@style/ToggleListenerStyle"
+            android:textOff="@string/listenToggleButtonOff"
+            android:textOn="@string/listenToggleButtonOn"
+        />
+
+        <Button
+            android:id="@+id/helpButton"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Help"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
 
 
 </RelativeLayout>

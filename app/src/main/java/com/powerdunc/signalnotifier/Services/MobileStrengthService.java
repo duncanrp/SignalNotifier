@@ -33,6 +33,8 @@ public class MobileStrengthService extends Service {
     SignalStateListener signalStateListener;
     Database database;
 
+    Notification notification;
+
     Intent intent;
     String[] perms = new String[] {};
 
@@ -53,7 +55,7 @@ public class MobileStrengthService extends Service {
         telephonyManager = (TelephonyManager) getSystemService(Service.TELEPHONY_SERVICE);
         telephonyManager.listen(signalStateListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
 
-        Notification notification = new Notification();
+        notification = new Notification();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
@@ -88,6 +90,15 @@ public class MobileStrengthService extends Service {
 
     }
 
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+
+
+        telephonyManager.listen(signalStateListener, PhoneStateListener.LISTEN_NONE);
+    }
+
     @SuppressLint("MissingPermission")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -103,7 +114,7 @@ public class MobileStrengthService extends Service {
         AppSetting setting = AppSettingsDAC.GetSetting(this, "enabled");
 
 
-        if(setting.GetValue().equals("true")) {
+        if(setting.GetValueBool()) {
             //Restart the service once it has been killed android
             Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
 

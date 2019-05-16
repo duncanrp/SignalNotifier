@@ -8,16 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="SwitchStyle" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlActivated">@color/colorPrimary</item>
+    <style name="ToggleListenerStyle" parent="Theme.AppCompat.Light.DarkActionBar">
 
-        <!-- inactive thumb color -->
-        <item name="colorSwitchThumbNormal">#f1f1f1
-        </item>
+        <item name="colorAccent">@color/colorPrimary</item>
 
-        <!-- inactive track color (30% transparency) -->
-        <item name="android:colorForeground">#42221f1f
-        </item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

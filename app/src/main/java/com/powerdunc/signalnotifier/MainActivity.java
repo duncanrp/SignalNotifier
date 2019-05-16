@@ -6,10 +6,12 @@ import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -26,8 +28,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     Button settingsButton;
-    Switch enabledToggleButton;
+    Button helpButton;
+
+    ToggleButton enabledToggleButton;
     TextView listeningMessageTextView;
+    WebView listeningHTMLTextView;
+
     ViewGroup mainActivityViewGroup;
 
     AppSetting enabledSetting;
@@ -38,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
 
         //Get the default actionbar instance
@@ -53,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         InitControls();
 
-        if (enabledSetting.GetValue().equals("true") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        if (enabledSetting.GetValueBool() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
             StartListening();
         }
@@ -69,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), SettingsActivity.class);
+
+                startActivityForResult(intent, 0);
+            }
+        });
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), HelpActivity.class);
 
                 startActivityForResult(intent, 0);
             }
@@ -93,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     StopListening();
                 }
+
             }
         });
     }
@@ -101,8 +116,10 @@ public class MainActivity extends AppCompatActivity {
     public void InitControls() {
         mainActivityViewGroup = (ViewGroup)findViewById(R.id.mainActivityLayout);
         settingsButton = (Button)findViewById(R.id.settingsButton);
-        enabledToggleButton = (Switch)findViewById(R.id.enabledToggleButton);
+        helpButton = (Button)findViewById(R.id.helpButton);
+        enabledToggleButton = (ToggleButton) findViewById(R.id.enabledToggleButton);
         listeningMessageTextView = (TextView)findViewById(R.id.listeningMessage);
+        listeningHTMLTextView = (WebView) findViewById(R.id.listeningHTML);
 
         enabledSetting = AppSettingsDAC.GetSetting(this, "enabled");
 
@@ -128,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         enabledToggleButton.setChecked(Boolean.valueOf(enabledSetting.GetValue()));
+
+        listeningHTMLTextView.loadDataWithBaseURL("", getString(R.string.loadingBlocksHTML), "text/html", "UTF-8", "");
     }
 
 
@@ -136,10 +155,10 @@ public class MainActivity extends AppCompatActivity {
         //Transition on text display
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             TransitionManager.beginDelayedTransition(mainActivityViewGroup);
-
-            listeningMessageTextView.setVisibility(View.VISIBLE);
         }
 
+        listeningMessageTextView.setVisibility(View.VISIBLE);
+        listeningHTMLTextView.setVisibility(View.VISIBLE);
 
         StartService();
     }
@@ -149,9 +168,11 @@ public class MainActivity extends AppCompatActivity {
         //Transition on text display
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             TransitionManager.beginDelayedTransition(mainActivityViewGroup);
-
-            listeningMessageTextView.setVisibility(View.GONE);
         }
+
+
+        listeningMessageTextView.setVisibility(View.GONE);
+        listeningHTMLTextView.setVisibility(View.GONE);
 
         StopService();
     }
@@ -159,13 +180,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void StopService()
     {
-        Intent intent = new Intent(this, MobileStrengthService.class);
+        Intent intent = new Intent(MainActivity.this, MobileStrengthService.class);
         stopService(intent);
     }
 
     public void StartService()
     {
-        Intent intent = new Intent(this, MobileStrengthService.class);
+        Intent intent = new Intent(MainActivity.this, MobileStrengthService.class);
         startService(intent);
     }
 

@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.powerdunc.signalnotifier" >
+    package="com.powerdunc.signalnotifier">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:name=".SignalNotifierApp"
         android:allowBackup="true"
         android:icon="@mipmap/signalnotifier_launcher_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/signalnotifier_launcher_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".SignalNotifierApp">
+        android:theme="@style/AppTheme">
+        <activity android:name=".HelpActivity"></activity>
 
         <receiver android:name=".Services.AutoStart">
             <intent-filter>
@@ -21,21 +22,16 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.powerdunc.signalnotifier.Services.MobileStrengthService"></service>
+        <service android:name=".Services.MobileStrengthService" />
 
-
-
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".SettingsActivity">
-
-        </activity>
+        <activity android:name=".SettingsActivity" />
     </application>
 
 </manifest>

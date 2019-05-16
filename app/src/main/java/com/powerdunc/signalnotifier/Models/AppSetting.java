@@ -56,6 +56,8 @@ public class AppSetting  extends DatabaseObject {
         return Integer.valueOf(value);
     }
 
+    public boolean GetValueBool() { return Boolean.valueOf(value); }
+
     public void SetValue(String newValue)
     {
         this.value = newValue;

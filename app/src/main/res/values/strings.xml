@@ -1,4 +1,230 @@
 <resources>
     <string name="app_name">SignalNotifier</string>
     <string name="notificationChannelName">SignalNotifierNotificationChannel</string>
+    <string name="listenToggleButtonOn">Stop</string>
+    <string name="listenToggleButtonOff">Start</string>
+
+    <string name="helpContent">
+        <![CDATA[Signal Notifier is an app designed with ease of use in mind.
+            \n\nSimply press the 'Start' button, and the app will start tracking your mobile phone's signal strength.
+            \n\nWhen the application detects that your mobile has come back into range of a cell tower, a notification will sound according to the settings setup in the settings screen.
+        ]]>
+    </string>
+
+    <string name="loadingBlocksHTML2">
+        <![CDATA[
+        <style>
+        /*
+ *  The MIT License (MIT)
+ *  Copyright (c) 2014 Daniele Favi
+ *  email: favs83@gmailcom
+ */
+
+body {
+    background: #fbfbfb;
+}
+
+#wave-container {
+    position:relative;
+    height: 36px;
+    width: 132px;
+    margin: 0px auto 0px auto;
+}
+
+.dot-wave {
+    transform-origin: 50% 50%;
+    height: 6px;
+    width: 6px;
+    border-radius : 50%;
+    top:0;
+    background-color: #f8981d;
+    position: absolute;
+    -webkit-animation:vertical-movement 2.5s infinite ease-in-out;
+    -moz-animation:vertical-movement 2.5s infinite ease-in-out;
+    -ms-animation:vertical-movement 2.5s infinite ease-in-out;
+    -o-animation:vertical-movement 2.5s infinite ease-in-out;
+    animation:vertical-movement 2.5s infinite ease-in-out;
+}
+
+#d1 {left:12px;-webkit-animation-delay:-0.3s;-moz-animation-delay:-0.3s;-ms-animation-delay:-0.3s;-o-animation-delay:-0.3s;animation-delay:-0.3s;opacity: 0.1}
+#d2 {left:24px;-webkit-animation-delay:-0.6s;-moz-animation-delay:-0.6s;-ms-animation-delay:-0.6s;-o-animation-delay:-0.6s;animation-delay:-0.6s;opacity: 0.2}
+#d3 {left:36px;-webkit-animation-delay:-0.9s;-moz-animation-delay:-0.9s;-ms-animation-delay:-0.9s;-o-animation-delay:-0.9s;animation-delay:-0.9s;opacity: 0.3}
+#d4 {left:48px;-webkit-animation-delay:-1.2s;-moz-animation-delay:-1.2s;-ms-animation-delay:-1.2s;-o-animation-delay:-1.2s;animation-delay:-1.2s;opacity: 0.4}
+#d5 {left:60px;-webkit-animation-delay:-1.5s;-moz-animation-delay:-1.5s;-ms-animation-delay:-1.5s;-o-animation-delay:-1.5s;animation-delay:-1.5s;opacity: 0.5}
+#d6 {left:72px;-webkit-animation-delay:-1.8s;-moz-animation-delay:-1.8s;-ms-animation-delay:-1.8s;-o-animation-delay:-1.8s;animation-delay:-1.8s;opacity: 0.6}
+#d7 {left:84px;-webkit-animation-delay:-2.1s;-moz-animation-delay:-2.1s;-ms-animation-delay:-2.1s;-o-animation-delay:-2.1s;animation-delay:-2.1s;opacity: 0.7}
+#d8 {left:96px;-webkit-animation-delay:-2.4s;-moz-animation-delay:-2.4s;-ms-animation-delay:-2.4s;-o-animation-delay:-2.4s;animation-delay:-2.4s;opacity: 0.8}
+#d9 {left:108px;-webkit-animation-delay:-2.7s;-moz-animation-delay:-2.7s;-ms-animation-delay:-2.7s;-o-animation-delay:-2.7s;animation-delay:-2.7s;opacity: 0.9}
+#d10 {left:120px;-webkit-animation-delay:-3s;-moz-animation-delay:-3s;-ms-animation-delay:-3s;-o-animation-delay:-3s;animation-delay:-3s;opacity: 1}
+
+@-webkit-keyframes vertical-movement {
+    0%,100% {
+        -webkit-transform: translateY(0%);
+    }
+    50% {
+        -webkit-transform: translateY(30px);
+    }
+}
+
+@keyframes vertical-movement {
+    0%,100% {
+        -webkit-transform: translateY(0%);
+        -moz-transform: translateY(0%);
+        -ms-transform: translateY(0%);
+        -o-transform: translateY(0%);
+        transform: translateY(0%);
+    }
+    50% {
+        -webkit-transform: translateY(30px);
+        -moz-transform: translateY(30px);
+        -ms-transform: translateY(30px);
+        -o-transform: translateY(30px);
+        transform: translateY(30px);
+    }
+}
+        </style>
+
+            <div id="wave-container">
+                <div class="dot-wave" id="d1"></div>
+                <div class="dot-wave" id="d2"></div>
+                <div class="dot-wave" id="d3"></div>
+                <div class="dot-wave" id="d4"></div>
+                <div class="dot-wave" id="d5"></div>
+                <div class="dot-wave" id="d6"></div>
+                <div class="dot-wave" id="d7"></div>
+                <div class="dot-wave" id="d8"></div>
+                <div class="dot-wave" id="d9"></div>
+                <div class="dot-wave" id="d10"></div>
+            </div>
+        ]]>
+    </string>
+    <string name="loadingBlocksHTML">
+        <![CDATA[
+            <style>
+body {
+  text-align: center;
+  vertical-align: center;
+  margin: 20px 10px 0;
+  background-color: #fbfbfb;
+}
+.wifi-symbol {
+  display: none;
+}
+.wifi-symbol [foo], .wifi-symbol {
+  display: block;
+  position: absolute;
+  top: 50%;
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  margin-top: -187.5px;
+  -ms-transform: rotate(-45deg) translate(-100px);
+  -moz-transform: rotate(-45deg) translate(-100px);
+  -o-transform: rotate(-45deg) translate(-100px);
+  -webkit-transform: rotate(-45deg) translate(-100px);
+  transform: rotate(-45deg) translate(-100px);
+}
+.wifi-symbol .wifi-circle {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 21.42857px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-color: #000;
+  border-style: solid;
+  border-width: 1em 1em 0 0;
+  -webkit-border-radius: 0 100% 0 0;
+  border-radius: 0 100% 0 0;
+  opacity: 0;
+  -o-animation: wifianimation 3s infinite;
+  -moz-animation: wifianimation 3s infinite;
+  -webkit-animation: wifianimation 3s infinite;
+  animation: wifianimation 3s infinite;
+}
+.wifi-symbol .wifi-circle.first {
+  -o-animation-delay: 800ms;
+  -moz-animation-delay: 800ms;
+  -webkit-animation-delay: 800ms;
+  animation-delay: 800ms;
+}
+.wifi-symbol .wifi-circle.second {
+  width: 5em;
+  height: 5em;
+  -o-animation-delay: 400ms;
+  -moz-animation-delay: 400ms;
+  -webkit-animation-delay: 400ms;
+  animation-delay: 400ms;
+}
+.wifi-symbol .wifi-circle.third {
+  width: 3em;
+  height: 3em;
+}
+.wifi-symbol .wifi-circle.fourth {
+  width: 1em;
+  height: 1em;
+  opacity: 1;
+  background-color: #ffc;
+  -o-animation: none;
+  -moz-animation: none;
+  -webkit-animation: none;
+  animation: none;
+}
+@-o-keyframes wifianimation {
+  0% {
+    opacity: 0.4;
+  }
+  5% {
+    opactiy: 1;
+  }
+  6% {
+    opactiy: 0.1;
+  }
+  100% {
+    opactiy: 0.1;
+  }
+}
+@-moz-keyframes wifianimation {
+  0% {
+    opacity: 0.4;
+  }
+  5% {
+    opactiy: 1;
+  }
+  6% {
+    opactiy: 0.1;
+  }
+  100% {
+    opactiy: 0.1;
+  }
+}
+@-webkit-keyframes wifianimation {
+  0% {
+    opacity: 0.4;
+  }
+  5% {
+    opactiy: 1;
+  }
+  6% {
+    opactiy: 0.1;
+  }
+  100% {
+    opactiy: 0.1;
+  }
+}
+
+            </style>
+
+            <div class="wifi-symbol">
+  <div class="wifi-circle first"></div>
+  <div class="wifi-circle second"></div>
+  <div class="wifi-circle third"></div>
+  <div class="wifi-circle fourth"></div>
+</div>
+        ]]>
+    </string>
+    <string name="title_activity_help">HelpActivity</string>
 </resources>
