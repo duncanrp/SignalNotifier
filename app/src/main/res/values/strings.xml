@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SignalNotifier</string>
+    <string name="app_name">Signal Notifier</string>
     <string name="notificationChannelName">SignalNotifierNotificationChannel</string>
     <string name="listenToggleButtonOn">Stop</string>
     <string name="listenToggleButtonOff">Start</string>
@@ -227,4 +227,7 @@ body {
         ]]>
     </string>
     <string name="title_activity_help">HelpActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

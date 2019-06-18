@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "92369205536",
+    "firebase_url": "https://signalnotifier-e57c9.firebaseio.com",
+    "project_id": "signalnotifier-e57c9",
+    "storage_bucket": "signalnotifier-e57c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92369205536:android:2d808524ad78e8c7",
+        "android_client_info": {
+          "package_name": "com.powerdunc.signalnotifier"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92369205536-c60cfprhrrgj1l71c0t3e9ko8odmpm15.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.powerdunc.signalnotifier",
+            "certificate_hash": "e4f13c9d62d4c67c74ba9adb7fc87a8180c475c0"
+          }
+        },
+        {
+          "client_id": "92369205536-aie2fqpopg3nm3rcoh6o2h26dqk09qvc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbHiZW5TCC5W-JCdwcfzllSE8d7Y4IBp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92369205536-aie2fqpopg3nm3rcoh6o2h26dqk09qvc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-9775361141698651~3404671278"
+    }
+  ],
+  "configuration_version": "1"
+}

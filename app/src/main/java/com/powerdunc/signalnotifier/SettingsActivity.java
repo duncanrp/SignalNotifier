@@ -1,7 +1,15 @@
 package com.powerdunc.signalnotifier;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -12,28 +20,30 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.powerdunc.signalnotifier.Adapters.SettingsViewerPager;
 import com.powerdunc.signalnotifier.Adapters.SimpleSpinnerAdapter;
 import com.powerdunc.signalnotifier.DataAccess.AppSettingsDAC;
 import com.powerdunc.signalnotifier.DataAccess.NotificationSettingsDAC;
 import com.powerdunc.signalnotifier.Models.AppSetting;
 import com.powerdunc.signalnotifier.Models.NotificationSound;
 import com.powerdunc.signalnotifier.Models.NotificationStyle;
+import com.powerdunc.signalnotifier.Models.SettingsViewModel;
 import com.powerdunc.signalnotifier.Providers.SoundProvider;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity
+        extends AppCompatActivity
+        implements Settings_Sound.OnFragmentInteractionListener, Settings_Vibration.OnFragmentInteractionListener {
 
 
-    AppSetting notificationSoundSetting;
-    AppSetting notificationStyleSetting;
+
 
     Button cancelSettingsBtn, saveSettingsBtn;
+    TabLayout tabLayout;
+    ViewPager viewPager;
 
-    Button notificationSoundPreviewBtn;
-    Spinner notificationStyleSelector;
-    Spinner notificationSoundSelector;
+    FragmentManager fragmentManager;
 
-    NotificationStyle currentNotificationStyle;
-    NotificationSound currentNotificationSound;
+    private SettingsViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,84 +61,28 @@ public class SettingsActivity extends AppCompatActivity {
         mActionBar.setCustomView(mCustomView);
         mActionBar.setDisplayShowCustomEnabled(true);
 
-        //Setup our actionbar
-        //LayoutInflater mInflater = LayoutInflater.from(this);
-        //View mCustomView = mInflater.inflate(R.layout.activity_settings, null);
-        //mActionBar.setCustomView(mCustomView);
-        //mActionBar.setDisplayShowCustomEnabled(true);
 
-        //Intent intent = new Intent(this, MobileStrengthService.class);
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //startService(intent);
-        //}
+        viewModel = ViewModelProviders.of(this).get(SettingsViewModel.class);
 
-        LoadSettings();
+
         LoadControls();
         InitUI();
     }
 
     public void InitUI()
     {
-        currentNotificationSound = NotificationSound.GetByValue(notificationSoundSetting.GetValueInt());
+        SettingsViewerPager settingsViewerPager = new SettingsViewerPager(this, getSupportFragmentManager());
 
-        SetNotificationSoundData();
-        SetNotificationStyleData();
+        viewPager.setAdapter(settingsViewerPager);
+        tabLayout.addOnTabSelectedListener(onTabSelectedListener(viewPager));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
 
-    public void SetNotificationSoundData()
-    {
-       SimpleSpinnerAdapter adapter = NotificationSettingsDAC.GetNotificationSounds(this);
-
-        notificationSoundSelector.setAdapter(adapter);
-
-        String currentNotificationStyleStr = notificationSoundSetting.GetValue();
-
-        int position = adapter.getPosition(currentNotificationSound.GetDisplayValue());
-
-        notificationSoundSelector.setSelection(position);
-    }
-
-    public void SetNotificationStyleData()
-    {
-        SimpleSpinnerAdapter adapter = NotificationSettingsDAC.GetNotificationStyles(this);
-
-        notificationStyleSelector.setAdapter(adapter);
-
-        String currentNotificationStyleStr = currentNotificationStyle.DisplayValue();
-
-        int position = adapter.getPosition(currentNotificationStyleStr);
-
-        notificationStyleSelector.setSelection(position);
-    }
 
     public void LoadControls()
     {
-        notificationSoundSelector = (Spinner) findViewById(R.id.notificationSoundNameSelector);
-        notificationSoundPreviewBtn = (Button)findViewById(R.id.selectNotificationSoundPreviewBtn);
-
-        notificationSoundPreviewBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String selected = notificationSoundSelector.getSelectedItem().toString();
-                NotificationSound selectedSound = NotificationSound.GetByDisplayValue(selected);
-
-                SoundProvider.PlaySound(view.getContext(), selectedSound.GetValue());
-            }
-        });
-
-        notificationStyleSelector = (Spinner)findViewById(R.id.notificationStyleSelector);
-
-        notificationStyleSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        tabLayout = (TabLayout)findViewById(R.id.SettingsTabs);
+        viewPager = (ViewPager)findViewById(R.id.SettingViewerPager);
 
         cancelSettingsBtn = (Button)findViewById(R.id.settingsCancelButton);
         cancelSettingsBtn.setOnClickListener(new View.OnClickListener() {
@@ -146,31 +100,31 @@ public class SettingsActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
     public void SaveSettings()
     {
-        //Notification Sound
-        String selectedSound = notificationSoundSelector.getSelectedItem().toString();
+
+        boolean enabled = viewModel.notificationSoundEnabledBtn.isChecked();
+
+        viewModel.notificationSoundEnabledSetting.SetValue(Boolean.toString(enabled));
+        viewModel.notificationSoundEnabledSetting.Save(this);
+
+
+        String selectedSound = viewModel.notificationSoundSelector.getSelectedItem().toString();
         NotificationSound selectedNotificationSound = NotificationSound.GetByDisplayValue(selectedSound);
 
-        notificationSoundSetting.SetValue(selectedNotificationSound.GetValue());
-        notificationSoundSetting.Save(this);
+        viewModel.notificationSoundSetting.Save(this);
+        viewModel.notificationSoundSetting.SetValue(selectedNotificationSound.GetValue());
 
         //Notification Style
-        String selected = notificationStyleSelector.getSelectedItem().toString();
+        String selected = viewModel.notificationStyleSelector.getSelectedItem().toString();
         NotificationStyle selectedNotificationStyle = NotificationStyle.GetByDisplayValue(selected);
 
 
-        notificationStyleSetting.SetValue(selectedNotificationStyle.ordinal());
-        notificationStyleSetting.Save(this);
-    }
-
-    public void LoadSettings()
-    {
-        notificationSoundSetting = AppSettingsDAC.GetSetting(this, "notificationSound");
-        notificationStyleSetting = AppSettingsDAC.GetSetting(this, "notificationStyle");
-        currentNotificationStyle = ((NotificationStyle)NotificationStyle.values()[notificationStyleSetting.GetValueInt()]);
+        viewModel.notificationStyleSetting.SetValue(selectedNotificationStyle.ordinal());
+        viewModel.notificationStyleSetting.Save(this);
     }
 
 
@@ -180,4 +134,27 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    private TabLayout.OnTabSelectedListener onTabSelectedListener(final ViewPager pager) {
+        return new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                pager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        };
+    }
 }

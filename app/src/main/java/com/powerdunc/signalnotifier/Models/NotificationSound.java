@@ -42,13 +42,15 @@ public enum NotificationSound {
 
     public static NotificationSound GetByValue(int value)
     {
-        for(NotificationSound sound : values())
-        {
-            if(sound.value == value)
-                return sound;
-        }
+        String s = "";
 
-        return null;
+       for(NotificationSound sound : values())
+       {
+           if(sound.value == value)
+               return sound;
+       }
+
+       return null;
     }
 
     public static NotificationSound GetByDisplayValue(String displayValue)

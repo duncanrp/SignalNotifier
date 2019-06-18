@@ -44,6 +44,7 @@ public class SignalStateListener extends PhoneStateListener {
     private SignalNotifierApp application;
     private AppSetting notificationSoundSetting;
     private AppSetting notificationStyleSetting;
+    private AppSetting notificationSoundEnabledSetting;
 
     public SignalStateListener(Context context) {
         this.context = context;
@@ -55,6 +56,7 @@ public class SignalStateListener extends PhoneStateListener {
     public void onSignalStrengthsChanged(SignalStrength signalStrength) {
         super.onSignalStrengthsChanged(signalStrength);
 
+        notificationSoundEnabledSetting = AppSettingsDAC.GetSetting(context.getApplicationContext(), "notificationSoundEnabled");
         notificationSoundSetting = AppSettingsDAC.GetSetting(context.getApplicationContext(), "notificationSound");
         notificationStyleSetting = AppSettingsDAC.GetSetting(context.getApplicationContext(), "notificationStyle");
 
@@ -101,7 +103,11 @@ public class SignalStateListener extends PhoneStateListener {
     public void PlayNotificationSound(int totalPlays)
     {
         for(int i = 0; i < totalPlays; i++) {
-            SoundProvider.PlaySound(context, notificationSoundSetting.GetValueInt());
+
+            if(notificationSoundEnabledSetting.GetValueBool())
+                SoundProvider.PlaySound(context, notificationSoundSetting.GetValueInt());
+
+
             VibrationProvider.Vibrate(context, 250);
 
             try {

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".Settings_Sound">
+
+
+    <LinearLayout
+        android:id="@+id/soundToggleButtonLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/soundToggleButtonTxt"
+            android:layout_width="144dp"
+            android:layout_height="47dp"
+            android:layout_gravity="center|left"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Sound"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ToggleButton
+            android:id="@+id/soundToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Sound" />
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/soundSettingsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/soundToggleButtonLL">
+
+        <TextView
+            android:id="@+id/notificationSoundTxt"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Notification Sound"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <Spinner
+            android:id="@+id/notificationSoundNameSelector"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/notificationSoundTxt"
+            android:text="None"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/selectNotificationSoundPreviewBtn"
+            style="@android:style/Widget.Button.Inset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/notificationSoundNameSelector"
+            android:backgroundTint="@color/colorButtonPrimary"
+            android:text="Play Sound" />
+
+
+        <TextView
+            android:id="@+id/notificationPlayAmount"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_below="@id/selectNotificationSoundPreviewBtn"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Notification Style"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/notificationStyleSelector"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/notificationPlayAmount" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

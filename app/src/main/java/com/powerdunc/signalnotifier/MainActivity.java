@@ -17,12 +17,16 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.crash.FirebaseCrash;
+import com.google.firebase.crash.component.FirebaseCrashRegistrar;
 import com.powerdunc.signalnotifier.DataAccess.AppSettingsDAC;
 import com.powerdunc.signalnotifier.Models.AppSetting;
 import com.powerdunc.signalnotifier.Models.NotificationStyle;
 import com.powerdunc.signalnotifier.Services.MobileStrengthService;
 
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,11 +44,12 @@ public class MainActivity extends AppCompatActivity {
     AppSetting notificationSoundSetting;
     AppSetting notificationStyleSetting;
 
+    AdView adView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         //Get the default actionbar instance
         ActionBar mActionBar = getSupportActionBar();
@@ -110,10 +115,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
 
     public void InitControls() {
+
+        adView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
         mainActivityViewGroup = (ViewGroup)findViewById(R.id.mainActivityLayout);
         settingsButton = (Button)findViewById(R.id.settingsButton);
         helpButton = (Button)findViewById(R.id.helpButton);
@@ -146,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
         enabledToggleButton.setChecked(Boolean.valueOf(enabledSetting.GetValue()));
 
-        listeningHTMLTextView.loadDataWithBaseURL("", getString(R.string.loadingBlocksHTML), "text/html", "UTF-8", "");
+        listeningHTMLTextView.loadDataWithBaseURL("", getString(R.string.loadingBlocksHTML2), "text/html", "UTF-8", "");
     }
 
 

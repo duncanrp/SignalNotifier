@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
-            android:text="Signal Ping"
+            android:text="@string/app_name"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textColor="#FFF"
             android:textSize="24sp" />
