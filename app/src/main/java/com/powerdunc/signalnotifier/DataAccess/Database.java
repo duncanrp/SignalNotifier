@@ -12,6 +12,10 @@ import com.powerdunc.signalnotifier.Models.StrengthMeasure;
 import com.powerdunc.signalnotifier.Utils.DbUtils;
 
 import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Duncan on 07-Jan-19.
@@ -20,7 +24,8 @@ import java.lang.reflect.Field;
 public class Database extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "SignalStrength_DB";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 10;
+    private Context context;
 
     private Class<? extends DatabaseObject>[] DatabaseObjects = new Class[] {
             StrengthMeasure.class,
@@ -29,6 +34,8 @@ public class Database extends SQLiteOpenHelper {
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+        this.context = context;
 
         getWritableDatabase();
     }
@@ -60,6 +67,20 @@ public class Database extends SQLiteOpenHelper {
             }
 
 
+        }
+
+
+        //Default Settings
+
+        Set<String> defaultSettingKeys = Settings.Defaults.keySet();
+
+        for(String key : defaultSettingKeys)
+        {
+
+            Object defaultValue = Settings.Defaults.get(key);
+
+            AppSetting defaultSetting = new AppSetting(key, defaultValue);
+            defaultSetting.Save(context);
         }
     }
 

@@ -16,6 +16,7 @@ public class SignalNotifierApp extends Application {
 
     private Database database;
     private DateFormat storedDateFormat;
+    private SQLiteDatabase sqLiteDatabase;
 
     public SQLiteDatabase GetDatabase() {
 
@@ -24,7 +25,12 @@ public class SignalNotifierApp extends Application {
 
         }
 
-        return database.getWritableDatabase();
+        if(sqLiteDatabase == null)
+        {
+            sqLiteDatabase = database.getWritableDatabase();
+        }
+
+        return sqLiteDatabase;
     }
 
     public DateFormat GetStoredDateFormat() {

@@ -8,6 +8,7 @@
 
 
     <LinearLayout
+        android:id="@+id/vibrationSettingsLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layoutDirection="ltr"
@@ -26,13 +27,39 @@
             android:textStyle="bold" />
 
         <ToggleButton
-            android:id="@+id/toggleButton"
+            android:id="@+id/vibrationToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="ToggleButton" />
 
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/vibrationSettingsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vibrationSettingsLL">
+
+
+        <TextView
+            android:id="@+id/vibrationStyleTxt"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Vibration Style"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/vibrationStyleSelector"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/vibrationStyleTxt" />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

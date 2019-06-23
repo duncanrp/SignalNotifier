@@ -53,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Get the default actionbar instance
         ActionBar mActionBar = getSupportActionBar();
-
-
         //Setup our actionbar
         LayoutInflater mInflater = LayoutInflater.from(this);
         View mCustomView = mInflater.inflate(R.layout.activity_main_actionbar, null);

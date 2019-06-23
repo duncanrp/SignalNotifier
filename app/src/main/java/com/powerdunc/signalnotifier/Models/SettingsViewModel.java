@@ -26,7 +26,11 @@ public class SettingsViewModel extends ViewModel {
 
 
     //Vibration Settings
-    public AppSetting notificationVibrationSetting;
+    public AppSetting notificationVibrationEnabledSetting;
     public AppSetting notificationVibrationStyleSetting;
+
+    public ToggleButton vibrationEnabledBtn;
+    public Spinner vibrationStyleSelector;
+
 
 }

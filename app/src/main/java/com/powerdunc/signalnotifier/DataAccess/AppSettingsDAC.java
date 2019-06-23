@@ -15,7 +15,7 @@ public class AppSettingsDAC {
         boolean success = false;
         long result = 0;
 
-        SignalNotifierApp app =  ((SignalNotifierApp)context.getApplicationContext());
+        SignalNotifierApp app = AppDAC.GetApp(context);
         SQLiteDatabase database = app.GetDatabase();
 
         if(setting.GetId() > 0)

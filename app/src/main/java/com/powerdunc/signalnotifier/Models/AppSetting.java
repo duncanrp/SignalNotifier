@@ -28,6 +28,12 @@ public class AppSetting  extends DatabaseObject {
         this.value = Value;
     }
 
+    public AppSetting(String Key, Object value)
+    {
+       this.key = Key;
+       this.value = String.valueOf(value);
+    }
+
     public AppSetting(String Key, String Value) {
         this.key = Key;
         this.value = Value;

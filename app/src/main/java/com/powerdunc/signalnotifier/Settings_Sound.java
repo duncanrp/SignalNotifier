@@ -70,11 +70,7 @@ public class Settings_Sound extends Fragment {
 
     public void LoadControls(View parent)
     {
-        if(viewModel.notificationSoundEnabledSetting == null)
-        {
-            viewModel.notificationSoundEnabledSetting = new AppSetting("notificationSoundEnabled", "true");
-            viewModel.notificationSoundEnabledSetting.Save(getContext());
-        }
+
 
         soundSettingsLinearLayout = (RelativeLayout)parent.findViewById(R.id.soundSettingsLayout);
 
@@ -103,7 +99,7 @@ public class Settings_Sound extends Fragment {
                     soundSettingsLinearLayout.setVisibility(View.INVISIBLE);
                 }
                 else
-                    {
+                {
                     soundSettingsLinearLayout.setVisibility(View.VISIBLE);
                 }
             }
@@ -121,17 +117,6 @@ public class Settings_Sound extends Fragment {
         });
 
         viewModel.notificationStyleSelector = (Spinner)parent.findViewById(R.id.notificationStyleSelector);
-
-        viewModel.notificationStyleSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
     }
 
     public void InitUI()
@@ -140,13 +125,6 @@ public class Settings_Sound extends Fragment {
 
         viewModel.currentNotificationSound = NotificationSound.GetByValue(soundSettingVal);
 
-        if(viewModel.currentNotificationSound == null)
-        {
-            viewModel.notificationSoundSetting.SetValue(R.raw.jump);
-            viewModel.notificationSoundSetting.Save(this.getContext());
-
-            viewModel.currentNotificationSound = NotificationSound.GetByValue(viewModel.notificationSoundSetting.GetValueInt());
-        }
 
         SetNotificationSoundData();
         SetNotificationStyleData();
