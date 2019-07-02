@@ -6,16 +6,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 
-import com.powerdunc.signalnotifier.Models.AppSetting;
 import com.powerdunc.signalnotifier.Models.DatabaseObject;
 import com.powerdunc.signalnotifier.Models.StrengthMeasure;
 import com.powerdunc.signalnotifier.Utils.DbUtils;
 
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Duncan on 07-Jan-19.
@@ -24,12 +20,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Database extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "SignalStrength_DB";
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 11;
     private Context context;
 
     private Class<? extends DatabaseObject>[] DatabaseObjects = new Class[] {
             StrengthMeasure.class,
-            AppSetting.class
     };
 
     public Database(Context context) {
@@ -67,20 +62,6 @@ public class Database extends SQLiteOpenHelper {
             }
 
 
-        }
-
-
-        //Default Settings
-
-        Set<String> defaultSettingKeys = Settings.Defaults.keySet();
-
-        for(String key : defaultSettingKeys)
-        {
-
-            Object defaultValue = Settings.Defaults.get(key);
-
-            AppSetting defaultSetting = new AppSetting(key, defaultValue);
-            defaultSetting.Save(context);
         }
     }
 

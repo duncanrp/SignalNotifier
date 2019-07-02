@@ -1,26 +1,23 @@
 package com.powerdunc.signalnotifier;
 
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
 
 import com.powerdunc.signalnotifier.Adapters.SimpleSpinnerAdapter;
-import com.powerdunc.signalnotifier.DataAccess.AppSettingsDAC;
 import com.powerdunc.signalnotifier.DataAccess.NotificationSettingsDAC;
-import com.powerdunc.signalnotifier.Models.AppSetting;
 import com.powerdunc.signalnotifier.Models.NotificationSound;
 import com.powerdunc.signalnotifier.Models.NotificationStyle;
 import com.powerdunc.signalnotifier.Models.SettingsViewModel;
@@ -35,12 +32,13 @@ public class Settings_Sound extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    SharedPreferences preferences;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-
+        preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
     }
 
     @Override
@@ -62,10 +60,8 @@ public class Settings_Sound extends Fragment {
 
     public void LoadSettings(View parent)
     {
-        viewModel.notificationSoundEnabledSetting = AppSettingsDAC.GetSetting(getContext(), "notificationSoundEnabled");
-        viewModel.notificationSoundSetting = AppSettingsDAC.GetSetting(getContext(), "notificationSound");
-        viewModel.notificationStyleSetting = AppSettingsDAC.GetSetting(getContext(), "notificationStyle");
-        viewModel.currentNotificationStyle = ((NotificationStyle)NotificationStyle.values()[viewModel.notificationStyleSetting.GetValueInt()]);
+        int notificationStyle = preferences.getInt("notificationStyle", 0);
+        viewModel.currentNotificationStyle = ((NotificationStyle)NotificationStyle.values()[notificationStyle]);
     }
 
     public void LoadControls(View parent)
@@ -74,15 +70,18 @@ public class Settings_Sound extends Fragment {
 
         soundSettingsLinearLayout = (RelativeLayout)parent.findViewById(R.id.soundSettingsLayout);
 
+        boolean notificationSoundEanbled = preferences.getBoolean("notificaitonSoundEnabled", true);
 
-        if(!viewModel.notificationSoundEnabledSetting.GetValueBool())
+        if(!notificationSoundEanbled)
         {
             soundSettingsLinearLayout.setVisibility(View.INVISIBLE);
+        } else {
+            soundSettingsLinearLayout.setVisibility(View.VISIBLE);
         }
 
 
         viewModel.notificationSoundEnabledBtn = (ToggleButton)parent.findViewById(R.id.soundToggleButton);
-        viewModel.notificationSoundEnabledBtn.setChecked(viewModel.notificationSoundEnabledSetting.GetValueBool());
+        viewModel.notificationSoundEnabledBtn.setChecked(notificationSoundEanbled);
 
         viewModel.notificationSoundSelector = (Spinner)parent.findViewById(R.id.notificationSoundNameSelector);
         viewModel.notificationSoundPreviewBtn = (Button)parent.findViewById(R.id.selectNotificationSoundPreviewBtn);
@@ -121,7 +120,8 @@ public class Settings_Sound extends Fragment {
 
     public void InitUI()
     {
-        int soundSettingVal = viewModel.notificationSoundSetting.GetValueInt();
+        int soundSettingVal = preferences.getInt("notificationSound", NotificationSound.Jump.GetValue());
+
 
         viewModel.currentNotificationSound = NotificationSound.GetByValue(soundSettingVal);
 
@@ -133,11 +133,13 @@ public class Settings_Sound extends Fragment {
 
     public void SetNotificationSoundData()
     {
+        int currentNotificationStyle = preferences.getInt("notificationStyle", 0);
+
         SimpleSpinnerAdapter adapter = NotificationSettingsDAC.GetNotificationSounds(this.getContext());
 
         viewModel.notificationSoundSelector.setAdapter(adapter);
 
-        String currentNotificationStyleStr = viewModel.notificationSoundSetting.GetValue();
+        String currentNotificationStyleStr = NotificationStyle.values()[currentNotificationStyle].DisplayValue();
 
         int position = adapter.getPosition(viewModel.currentNotificationSound.GetDisplayValue());
 

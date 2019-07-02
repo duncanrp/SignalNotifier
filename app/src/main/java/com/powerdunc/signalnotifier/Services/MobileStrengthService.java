@@ -9,20 +9,19 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.telephony.CellSignalStrength;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
-import com.powerdunc.signalnotifier.DataAccess.AppSettingsDAC;
 import com.powerdunc.signalnotifier.DataAccess.Database;
 import com.powerdunc.signalnotifier.Listener.SignalStateListener;
-import com.powerdunc.signalnotifier.Models.AppSetting;
 import com.powerdunc.signalnotifier.R;
 
 public class MobileStrengthService extends Service {
@@ -32,7 +31,7 @@ public class MobileStrengthService extends Service {
     TelephonyManager telephonyManager;
     SignalStateListener signalStateListener;
     Database database;
-
+    SharedPreferences preferences;
     Notification notification;
 
     Intent intent;
@@ -49,6 +48,7 @@ public class MobileStrengthService extends Service {
     public void onCreate() {
         super.onCreate();
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         notificationManager = (NotificationManager) getSystemService(Service.NOTIFICATION_SERVICE);
         signalStateListener = new SignalStateListener(this);
 
@@ -111,10 +111,7 @@ public class MobileStrengthService extends Service {
     @Override
     public void onTaskRemoved(Intent rootIntent) {
 
-        AppSetting setting = AppSettingsDAC.GetSetting(this, "enabled");
-
-
-        if(setting.GetValueBool()) {
+        if(preferences.getBoolean("listenerEnabled", false)) {
             //Restart the service once it has been killed android
             Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
 

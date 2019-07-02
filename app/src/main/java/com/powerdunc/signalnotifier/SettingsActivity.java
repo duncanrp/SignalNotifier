@@ -1,13 +1,12 @@
 package com.powerdunc.signalnotifier;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -15,20 +14,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import com.powerdunc.signalnotifier.Adapters.SettingsViewerPager;
-import com.powerdunc.signalnotifier.Adapters.SimpleSpinnerAdapter;
-import com.powerdunc.signalnotifier.DataAccess.AppSettingsDAC;
-import com.powerdunc.signalnotifier.DataAccess.NotificationSettingsDAC;
-import com.powerdunc.signalnotifier.Models.AppSetting;
 import com.powerdunc.signalnotifier.Models.NotificationSound;
 import com.powerdunc.signalnotifier.Models.NotificationStyle;
 import com.powerdunc.signalnotifier.Models.SettingsViewModel;
-import com.powerdunc.signalnotifier.Providers.SoundProvider;
+import com.powerdunc.signalnotifier.Models.VibrationStyle;
 
 public class SettingsActivity
         extends AppCompatActivity
@@ -44,6 +36,9 @@ public class SettingsActivity
     FragmentManager fragmentManager;
 
     private SettingsViewModel viewModel;
+
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +59,7 @@ public class SettingsActivity
 
         viewModel = ViewModelProviders.of(this).get(SettingsViewModel.class);
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         LoadControls();
         InitUI();
@@ -105,26 +101,33 @@ public class SettingsActivity
 
     public void SaveSettings()
     {
-
         boolean enabled = viewModel.notificationSoundEnabledBtn.isChecked();
 
-        viewModel.notificationSoundEnabledSetting.SetValue(Boolean.toString(enabled));
-        viewModel.notificationSoundEnabledSetting.Save(this);
+        editor = preferences.edit();
 
 
+        //Notification Sounds Enabled
+        editor.putBoolean("notificationSoundEnabled", enabled);
+
+
+        //Notification Sound
         String selectedSound = viewModel.notificationSoundSelector.getSelectedItem().toString();
         NotificationSound selectedNotificationSound = NotificationSound.GetByDisplayValue(selectedSound);
 
-        viewModel.notificationSoundSetting.Save(this);
-        viewModel.notificationSoundSetting.SetValue(selectedNotificationSound.GetValue());
+        editor.putInt("notificationSound", selectedNotificationSound.GetValue());
 
         //Notification Style
         String selected = viewModel.notificationStyleSelector.getSelectedItem().toString();
         NotificationStyle selectedNotificationStyle = NotificationStyle.GetByDisplayValue(selected);
+        editor.putInt("notificationStyle", selectedNotificationStyle.ordinal());
 
 
-        viewModel.notificationStyleSetting.SetValue(selectedNotificationStyle.ordinal());
-        viewModel.notificationStyleSetting.Save(this);
+        //Vibration Style
+        String selectedVibrationStyleStr = viewModel.vibrationStyleSelector.getSelectedItem().toString();
+        VibrationStyle selectedVibrationStyle = VibrationStyle.GetByDisplayValue(selectedVibrationStyleStr);
+        editor.putInt("vibrationStyle", selectedVibrationStyle.ordinal());
+
+        editor.commit();
     }
 
 

@@ -30,6 +30,7 @@
             android:id="@+id/soundToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:theme="@style/ToggleListenerStyle"
             android:text="Sound" />
 
 

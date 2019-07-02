@@ -4,31 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
+    android:paddingTop="10dp"
     tools:context=".SettingsActivity">
 
 
     <android.support.design.widget.TabLayout
+        android:id="@+id/SettingsTabs"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:id="@+id/SettingsTabs">
+        android:theme="@style/ToggleListenerStyle">
 
         <android.support.design.widget.TabItem
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Sound"/>
+            android:text="Sound"
+            android:theme="@style/ToggleListenerStyle" />
 
         <android.support.design.widget.TabItem
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Vibration"/>
+            android:text="Vibration"
+            android:theme="@style/ToggleListenerStyle" />
 
     </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/SettingViewerPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/SettingViewerPager"
-        android:layout_below="@id/SettingsTabs"/>
+        android:layout_below="@id/SettingsTabs" />
 
-    </RelativeLayout>
+</RelativeLayout>

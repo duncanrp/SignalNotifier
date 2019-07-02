@@ -1,30 +1,28 @@
 package com.powerdunc.signalnotifier;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.firebase.crash.FirebaseCrash;
-import com.google.firebase.crash.component.FirebaseCrashRegistrar;
-import com.powerdunc.signalnotifier.DataAccess.AppSettingsDAC;
-import com.powerdunc.signalnotifier.Models.AppSetting;
-import com.powerdunc.signalnotifier.Models.NotificationStyle;
+import com.powerdunc.signalnotifier.DataAccess.AppDAC;
 import com.powerdunc.signalnotifier.Services.MobileStrengthService;
 
 
@@ -40,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
     ViewGroup mainActivityViewGroup;
 
-    AppSetting enabledSetting;
-    AppSetting notificationSoundSetting;
-    AppSetting notificationStyleSetting;
-
     AdView adView;
+
+
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +57,12 @@ public class MainActivity extends AppCompatActivity {
         mActionBar.setCustomView(mCustomView);
         mActionBar.setDisplayShowCustomEnabled(true);
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+
         InitControls();
 
-        if (enabledSetting.GetValueBool() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        if (preferences.getBoolean("listenerEnabled", false) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
             StartListening();
         }
@@ -96,11 +97,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                editor = preferences.edit();
+
                 boolean isEnabled = enabledToggleButton.isChecked();
 
-                enabledSetting.SetValue(Boolean.toString(isEnabled));
+                editor.putBoolean("listenerEnabled", isEnabled);
 
-                boolean saved = enabledSetting.Save(view.getContext());
+                editor.commit();
 
                 if(isEnabled)
                 {
@@ -116,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void InitControls() {
 
         adView = (AdView)findViewById(R.id.adView);
@@ -130,30 +132,20 @@ public class MainActivity extends AppCompatActivity {
         listeningMessageTextView = (TextView)findViewById(R.id.listeningMessage);
         listeningHTMLTextView = (WebView) findViewById(R.id.listeningHTML);
 
-        enabledSetting = AppSettingsDAC.GetSetting(this, "enabled");
 
-        notificationSoundSetting = AppSettingsDAC.GetSetting(this, "notificationSound");
-        notificationStyleSetting = AppSettingsDAC.GetSetting(this, "notificationStyle");
+//        if(notificationSoundSetting == null)
+//        {
+//            notificationSoundSetting = new AppSetting("notificationSound", String.valueOf(R.raw.stairs));
+//            notificationSoundSetting.Save(this);
+//        }
+//
+//        if(notificationStyleSetting == null)
+//        {
+//            notificationStyleSetting = new AppSetting("notificationStyle", NotificationStyle.BarStrength.ordinal());
+//            notificationStyleSetting.Save(this);
+//        }
 
-        if(enabledSetting==null)
-        {
-            enabledSetting = new AppSetting("enabled", "true");
-            enabledSetting.Save(this);
-        }
-
-        if(notificationSoundSetting == null)
-        {
-            notificationSoundSetting = new AppSetting("notificationSound", String.valueOf(R.raw.stairs));
-            notificationSoundSetting.Save(this);
-        }
-
-        if(notificationStyleSetting == null)
-        {
-            notificationStyleSetting = new AppSetting("notificationStyle", NotificationStyle.BarStrength.ordinal());
-            notificationStyleSetting.Save(this);
-        }
-
-        enabledToggleButton.setChecked(Boolean.valueOf(enabledSetting.GetValue()));
+        enabledToggleButton.setChecked(preferences.getBoolean("listenerEnabled", false));
 
         listeningHTMLTextView.loadDataWithBaseURL("", getString(R.string.loadingBlocksHTML2), "text/html", "UTF-8", "");
     }
@@ -161,6 +153,26 @@ public class MainActivity extends AppCompatActivity {
 
     public void StartListening()
     {
+        //Get current volume
+        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        int vol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+
+        if(vol <= 2)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Your notification volume is currently low. It is recommended to turn this up so that you hear SignalNotifiers notifications.");
+            builder.setTitle("Recommendation");
+            builder.setPositiveButton("Ok, Thanks!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+
         //Transition on text display
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             TransitionManager.beginDelayedTransition(mainActivityViewGroup);

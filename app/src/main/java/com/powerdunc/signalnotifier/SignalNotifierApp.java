@@ -1,6 +1,7 @@
 package com.powerdunc.signalnotifier;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.powerdunc.signalnotifier.DataAccess.Database;
@@ -17,6 +18,7 @@ public class SignalNotifierApp extends Application {
     private Database database;
     private DateFormat storedDateFormat;
     private SQLiteDatabase sqLiteDatabase;
+
 
     public SQLiteDatabase GetDatabase() {
 

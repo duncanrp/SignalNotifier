@@ -6,9 +6,21 @@ import android.widget.ArrayAdapter;
 import com.powerdunc.signalnotifier.Adapters.SimpleSpinnerAdapter;
 import com.powerdunc.signalnotifier.Models.NotificationSound;
 import com.powerdunc.signalnotifier.Models.NotificationStyle;
+import com.powerdunc.signalnotifier.Models.VibrationStyle;
 import com.powerdunc.signalnotifier.R;
 
 public class NotificationSettingsDAC {
+
+    public static SimpleSpinnerAdapter GetVibrationStyles(Context context)
+    {
+        SimpleSpinnerAdapter notificationStyleAdapter = new SimpleSpinnerAdapter(
+                context,
+                VibrationStyle.GetDisplayValues()
+        );
+
+
+        return notificationStyleAdapter;
+    }
 
     public static SimpleSpinnerAdapter GetNotificationSounds(Context context)
     {
