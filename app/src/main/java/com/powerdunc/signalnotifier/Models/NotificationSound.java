@@ -7,7 +7,10 @@ import java.util.List;
 
 public enum NotificationSound {
     Stairs(R.raw.stairs, "Stairs"),
-    Jump(R.raw.jump, "Video Game Jump");
+    Jump(R.raw.jump, "Video Game Jump"),
+    ElevatorDing(R.raw.elevator_ding, "Elevator Ding"),
+    SmallBell(R.raw.small_bell, "Small Bell"),
+    PaintCan(R.raw.paint_can, "Paint Can");
 
     private final int value;
     private final String displayValue;

@@ -122,6 +122,10 @@ public class SettingsActivity
         editor.putInt("notificationStyle", selectedNotificationStyle.ordinal());
 
 
+        //Vibration Enabled
+        boolean vibrationEnabled = viewModel.vibrationEnabledBtn.isChecked();
+        editor.putBoolean("notificationVibrationEnabled", vibrationEnabled);
+
         //Vibration Style
         String selectedVibrationStyleStr = viewModel.vibrationStyleSelector.getSelectedItem().toString();
         VibrationStyle selectedVibrationStyle = VibrationStyle.GetByDisplayValue(selectedVibrationStyleStr);

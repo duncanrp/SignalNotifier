@@ -2,6 +2,7 @@ package com.powerdunc.signalnotifier;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -70,7 +72,7 @@ public class Settings_Sound extends Fragment {
 
         soundSettingsLinearLayout = (RelativeLayout)parent.findViewById(R.id.soundSettingsLayout);
 
-        boolean notificationSoundEanbled = preferences.getBoolean("notificaitonSoundEnabled", true);
+        boolean notificationSoundEanbled = preferences.getBoolean("notificationSoundEnabled", true);
 
         if(!notificationSoundEanbled)
         {
@@ -84,7 +86,8 @@ public class Settings_Sound extends Fragment {
         viewModel.notificationSoundEnabledBtn.setChecked(notificationSoundEanbled);
 
         viewModel.notificationSoundSelector = (Spinner)parent.findViewById(R.id.notificationSoundNameSelector);
-        viewModel.notificationSoundPreviewBtn = (Button)parent.findViewById(R.id.selectNotificationSoundPreviewBtn);
+
+        viewModel.notificationSoundPreviewBtn = (Button) parent.findViewById(R.id.selectNotificationSoundPreviewBtn);
 
 
         viewModel.notificationSoundEnabledBtn.setOnClickListener(new View.OnClickListener() {

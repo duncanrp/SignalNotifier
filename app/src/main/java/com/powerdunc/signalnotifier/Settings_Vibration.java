@@ -47,13 +47,13 @@ public class Settings_Vibration extends Fragment {
 
         viewModel = ViewModelProviders.of((FragmentActivity) getActivity()).get(SettingsViewModel.class);
 
+        vibrationSettingsRL = (RelativeLayout) view.findViewById(R.id.vibrationSettingsLayout);
 
         if(!preferences.getBoolean("notificationVibrationEnabled", true))
         {
             vibrationSettingsRL.setVisibility(View.INVISIBLE);
         }
 
-        vibrationSettingsRL = (RelativeLayout) view.findViewById(R.id.vibrationSettingsLayout);
 
         viewModel.vibrationEnabledBtn = (ToggleButton) view.findViewById(R.id.vibrationToggleButton);
 
