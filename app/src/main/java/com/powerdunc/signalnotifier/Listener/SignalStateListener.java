@@ -1,11 +1,15 @@
 package com.powerdunc.signalnotifier.Listener;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.location.LocationManager;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
@@ -24,6 +28,8 @@ import com.powerdunc.signalnotifier.SignalNotifierApp;
 
 import java.util.Date;
 
+import pub.devrel.easypermissions.EasyPermissions;
+
 public class SignalStateListener extends PhoneStateListener {
 
     private String TAG = "SignalStrengthListener";
@@ -32,6 +38,8 @@ public class SignalStateListener extends PhoneStateListener {
     private Context context;
     private SignalNotifierApp application;
     SharedPreferences preferences;
+    LocationManager locationManager;
+    SignalNotifierLocationListener locationListener;
 
     public SignalStateListener(Context context) {
         this.context = context;
@@ -39,12 +47,17 @@ public class SignalStateListener extends PhoneStateListener {
         this.application = (SignalNotifierApp)context.getApplicationContext();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        locationListener = new SignalNotifierLocationListener(context);
+        locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onSignalStrengthsChanged(SignalStrength signalStrength) {
         super.onSignalStrengthsChanged(signalStrength);
 
+        String[] permissionsReq = context.getString(R.string.app_permissions).split(",");
 
         int barStrength = -1;
 
@@ -57,10 +70,23 @@ public class SignalStateListener extends PhoneStateListener {
 
         if(lastStrength == 0 && barStrength > 0) {
 
+            locationListener.SetLastSignalStrength(barStrength);
+
             final NotificationStyle style = NotificationStyle.values()[preferences.getInt("notificationStyle", 0)];
             final VibrationStyle vStyle = VibrationStyle.values()[preferences.getInt("vibrationStyle", 0)];
 
             final int actualStrength = barStrength;
+
+
+
+            //Request current location
+            if(EasyPermissions.hasPermissions(context, permissionsReq)) {
+                if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+                    locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, locationListener, Looper.getMainLooper());
+                else
+                if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                    locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationListener, Looper.getMainLooper());
+            }
 
             Runnable soundThread = new Runnable() {
 
@@ -99,7 +125,13 @@ public class SignalStateListener extends PhoneStateListener {
 
             soundThread.run();
             vibrateThread.run();
+
+
+        } else if(lastStrength >= 0 && barStrength == 0) {
+            PlayNotificationSound(1);
         }
+
+
 
         //Store strength measure
         StrengthMeasure measure = new StrengthMeasure(
@@ -151,7 +183,6 @@ public class SignalStateListener extends PhoneStateListener {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             notification = new Notification.Builder(context.getApplicationContext(), Resources.getSystem().getString(R.string.notificationChannelName))
-                    .setSmallIcon(android.support.compat.R.drawable.notification_icon_background)
                     .setContentTitle(title)
                     .setContentText(text)
                     .setContentIntent(pendingIntent)

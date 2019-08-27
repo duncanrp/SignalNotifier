@@ -1,6 +1,6 @@
 package com.powerdunc.signalnotifier.Models;
 
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.ToggleButton;

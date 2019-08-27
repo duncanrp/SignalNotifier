@@ -38,7 +38,7 @@ public class SignalNotifierApp extends Application {
     public DateFormat GetStoredDateFormat() {
 
         if(storedDateFormat == null) {
-            storedDateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+            storedDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         }
 
         return storedDateFormat;

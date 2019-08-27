@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainActivityLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="wrap_content"
+    tools:context=".LocationView">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/MainViewerPage"
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/locationViewerMap"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"></com.google.android.gms.maps.MapView>
 </RelativeLayout>

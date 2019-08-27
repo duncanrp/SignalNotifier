@@ -7,6 +7,7 @@ import android.util.Log;
 
 
 import com.powerdunc.signalnotifier.Models.DatabaseObject;
+import com.powerdunc.signalnotifier.Models.LocationWithSignal;
 import com.powerdunc.signalnotifier.Models.StrengthMeasure;
 import com.powerdunc.signalnotifier.Utils.DbUtils;
 
@@ -20,11 +21,12 @@ import java.util.Set;
 public class Database extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "SignalStrength_DB";
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 20;
     private Context context;
 
     private Class<? extends DatabaseObject>[] DatabaseObjects = new Class[] {
             StrengthMeasure.class,
+            LocationWithSignal.class
     };
 
     public Database(Context context) {

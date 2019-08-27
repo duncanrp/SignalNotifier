@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/subActivityLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <WebView
+            android:id="@+id/listeningHTML"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp" />
+
+
+        <TextView
+            android:id="@+id/listeningMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp"
+            android:text="Awaiting Signal..."
+            android:textAllCaps="false"
+            android:textSize="21sp"
+            app:fontFamily="sans-serif-thin" />
+
+
+        <ToggleButton
+            android:id="@+id/enabledToggleButton"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:theme="@style/ToggleListenerStyle"
+            android:textOff="@string/listenToggleButtonOff"
+            android:textOn="@string/listenToggleButtonOn"
+            />
+
+        <Button
+            android:id="@+id/helpButton"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Help" />
+
+    </LinearLayout>
+
+
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-9775361141698651/2989792209" />
+</RelativeLayout>

@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/signalnotifier_launcher_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HelpActivity"></activity>
+        <activity android:name=".LocationView"></activity>
+        <activity android:name=".HelpActivity" />
 
         <receiver android:name=".Services.AutoStart">
             <intent-filter>
@@ -39,10 +40,13 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-9775361141698651~3404671278"/>
+            android:value="ca-app-pub-9775361141698651~3404671278" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="e5cf3c00454e97e336a3e266e731c5c9e4c0f1cb" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/gapik" />
     </application>
 
 </manifest>

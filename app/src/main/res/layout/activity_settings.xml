@@ -8,27 +8,34 @@
     tools:context=".SettingsActivity">
 
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/SettingsTabs"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:theme="@style/ToggleListenerStyle">
 
-        <android.support.design.widget.TabItem
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="General"
+            android:theme="@style/ToggleListenerStyle" />
+
+
+        <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Sound"
             android:theme="@style/ToggleListenerStyle" />
 
-        <android.support.design.widget.TabItem
+        <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Vibration"
             android:theme="@style/ToggleListenerStyle" />
 
-    </android.support.design.widget.TabLayout>
+    </com.google.android.material.tabs.TabLayout>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/SettingViewerPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

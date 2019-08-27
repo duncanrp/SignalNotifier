@@ -5,15 +5,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.powerdunc.signalnotifier.Settings_Sound;
-import com.powerdunc.signalnotifier.Settings_Vibration;
+import com.powerdunc.signalnotifier.MainActivity_Controller;
+import com.powerdunc.signalnotifier.MainActivity_LocationsWithSignal;
 
-public class SettingsViewerPager extends FragmentPagerAdapter {
+public class MainActivityViewerPager extends FragmentPagerAdapter {
 
     private Context context;
 
 
-    public SettingsViewerPager(Context context, FragmentManager fm) {
+    public MainActivityViewerPager(Context context, FragmentManager fm) {
         super(fm);
         this.context = context;
     }
@@ -25,10 +25,10 @@ public class SettingsViewerPager extends FragmentPagerAdapter {
         switch (position)
         {
             case 0:
-                fragment = new Settings_Sound();
+                fragment = new MainActivity_Controller();
                 break;
             case 1:
-                fragment = new Settings_Vibration();
+                fragment = new MainActivity_LocationsWithSignal();
                 break;
         }
 

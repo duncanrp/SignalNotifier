@@ -15,13 +15,14 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
 import com.powerdunc.signalnotifier.DataAccess.Database;
 import com.powerdunc.signalnotifier.Listener.SignalStateListener;
+import com.powerdunc.signalnotifier.MainActivity;
 import com.powerdunc.signalnotifier.R;
 
 public class MobileStrengthService extends Service {
@@ -35,7 +36,9 @@ public class MobileStrengthService extends Service {
     Notification notification;
 
     Intent intent;
-    String[] perms = new String[] {};
+
+    private static final int NOTIFICATION_ID = 1;
+
 
     @Nullable
     @Override
@@ -44,6 +47,7 @@ public class MobileStrengthService extends Service {
 
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onCreate() {
         super.onCreate();
@@ -57,6 +61,18 @@ public class MobileStrengthService extends Service {
 
         notification = new Notification();
 
+        Intent showTaskIntent = new Intent(getApplicationContext(), MainActivity.class);
+        showTaskIntent.setAction(Intent.ACTION_MAIN);
+        showTaskIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        showTaskIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(
+                getApplicationContext(),
+                0,
+                showTaskIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             String channelName = getResources().getString(R.string.notificationChannelName);
@@ -69,16 +85,23 @@ public class MobileStrengthService extends Service {
 
             notificationManager.createNotificationChannel(notificationChannel);
 
-            notification = new NotificationCompat.Builder(getApplicationContext())
+            notification = new NotificationCompat.Builder(this)
                     .setContentTitle("MobileSignalStrength")
                     .setChannelId(channelName)
-                    .setContentText("").build();
+                    .setWhen(System.currentTimeMillis())
+                    .setSmallIcon(R.mipmap.signalnotifier_launcher_icon_round)
+                    .setContentIntent(contentIntent)
+                    .setContentText("Signal Notifier is running. Tap here to open the application.")
+                    .setSubText("Plss")
+                    .build();
+
+
 
 
         }
 
         //Start Servuce
-        startForeground(1, notification);
+        startForeground(NOTIFICATION_ID, notification);
 
         //Acquire WakeLock
         PowerManager mgr = (PowerManager)getApplicationContext().getSystemService(Context.POWER_SERVICE);

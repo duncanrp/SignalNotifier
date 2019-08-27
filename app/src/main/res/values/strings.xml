@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Signal Notifier</string>
+    <string name="app_permissions">android.permission.ACCESS_FINE_LOCATION,android.permission.ACCESS_COARSE_LOCATION</string>
     <string name="notificationChannelName">SignalNotifierNotificationChannel</string>
     <string name="listenToggleButtonOn">Stop</string>
     <string name="listenToggleButtonOff">Start</string>
+    <string name="gapik">AIzaSyCdSegvXYf35-Kpv2lB4eE7JzpEEBNHxWw</string>
 
     <string name="helpContent">
         <![CDATA[Signal Notifier is an app designed with ease of use in mind.
