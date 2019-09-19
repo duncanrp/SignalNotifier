@@ -7,6 +7,10 @@ import android.widget.ToggleButton;
 
 public class SettingsViewModel extends ViewModel {
 
+    //General Settings
+    public ToggleButton notifySignalLossBtn;
+
+
     //Sounds Settings
     public NotificationSound currentNotificationSound;
     public NotificationStyle currentNotificationStyle;

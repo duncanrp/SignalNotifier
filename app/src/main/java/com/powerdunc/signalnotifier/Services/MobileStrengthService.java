@@ -10,6 +10,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -86,13 +88,17 @@ public class MobileStrengthService extends Service {
             notificationManager.createNotificationChannel(notificationChannel);
 
             notification = new NotificationCompat.Builder(this)
-                    .setContentTitle("MobileSignalStrength")
+                    .setContentTitle("Monitoring signal strength")
                     .setChannelId(channelName)
-                    .setWhen(System.currentTimeMillis())
-                    .setSmallIcon(R.mipmap.signalnotifier_launcher_icon_round)
+//                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.signalnotifier_launcher_icon_round))
+                    .setSmallIcon(R.drawable.signalnotifier_notif_icon_small)
                     .setContentIntent(contentIntent)
-                    .setContentText("Signal Notifier is running. Tap here to open the application.")
-                    .setSubText("Plss")
+                    .setTicker(null)
+                    .setShowWhen(false)
+                    .setColor(Color.rgb(233, 104, 53))
+                    .setOngoing(true)
+                    .setOnlyAlertOnce(true)
+                    .setContentText("Tap here to open the application.")
                     .build();
 
 

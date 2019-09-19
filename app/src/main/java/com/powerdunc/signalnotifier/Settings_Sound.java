@@ -27,7 +27,6 @@ import com.powerdunc.signalnotifier.Providers.SoundProvider;
 public class Settings_Sound extends Fragment {
 
     SettingsViewModel viewModel;
-    public Button cancelSettingsBtn, saveSettingsBtn;
     public RelativeLayout soundSettingsLinearLayout;
 
     private OnFragmentInteractionListener mListener;

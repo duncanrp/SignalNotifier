@@ -21,7 +21,7 @@ import java.util.Set;
 public class Database extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "SignalStrength_DB";
-    private static final int DATABASE_VERSION = 20;
+    private static final int DATABASE_VERSION = 21;
     private Context context;
 
     private Class<? extends DatabaseObject>[] DatabaseObjects = new Class[] {

@@ -84,7 +84,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundImage" value="C:\Users\Duncan\Downloads\Signal_Alert-05.png" />
+                                      <entry key="foregroundImage" value="C:\Users\Duncan\Desktop\signalnotifier_launcher_icon_round.png" />
                                       <entry key="foregroundLayerName" value="signalnotifier_launcher_foreground" />
                                       <entry key="outputName" value="signalnotifier_launcher_icon" />
                                     </map>
@@ -129,11 +129,36 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="000000" />
+                                                <entry key="paddingPercent" value="15" />
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\Duncan\Desktop\signalnotifier_launcher_icon_round.png" />
+                                      <entry key="outputName" value="signalnotifier_notif_icon_small" />
                                     </map>
                                   </option>
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="NOTIFICATION" />
                           </map>
                         </option>
                       </PersistentState>

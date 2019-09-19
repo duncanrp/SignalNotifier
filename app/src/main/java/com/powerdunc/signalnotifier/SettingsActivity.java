@@ -72,6 +72,7 @@ public class SettingsActivity
         viewPager.setAdapter(settingsViewerPager);
         tabLayout.addOnTabSelectedListener(onTabSelectedListener(viewPager));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.setOffscreenPageLimit(settingsViewerPager.getCount());
     }
 
 
@@ -105,6 +106,9 @@ public class SettingsActivity
 
         editor = preferences.edit();
 
+
+        //Signal Loss Notification
+        editor.putBoolean("notifySignalLoss", viewModel.notifySignalLossBtn.isChecked());
 
         //Notification Sounds Enabled
         editor.putBoolean("notificationSoundEnabled", enabled);

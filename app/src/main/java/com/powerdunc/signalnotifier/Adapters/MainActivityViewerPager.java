@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.powerdunc.signalnotifier.MainActivity_Controller;
 import com.powerdunc.signalnotifier.MainActivity_LocationsWithSignal;
+import com.powerdunc.signalnotifier.MainAtivity_LocationsWithSignal_All;
 
 public class MainActivityViewerPager extends FragmentPagerAdapter {
 
@@ -30,6 +31,9 @@ public class MainActivityViewerPager extends FragmentPagerAdapter {
             case 1:
                 fragment = new MainActivity_LocationsWithSignal();
                 break;
+            case 2:
+                fragment = new MainAtivity_LocationsWithSignal_All();
+                break;
         }
 
         return fragment;
@@ -37,6 +41,6 @@ public class MainActivityViewerPager extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 }

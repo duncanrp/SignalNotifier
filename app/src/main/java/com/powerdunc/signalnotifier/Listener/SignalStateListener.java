@@ -3,19 +3,27 @@ package com.powerdunc.signalnotifier.Listener;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
+
 import com.powerdunc.signalnotifier.DataAccess.StrengthMeasureDAC;
+import com.powerdunc.signalnotifier.MainActivity;
 import com.powerdunc.signalnotifier.Models.NotificationSound;
 import com.powerdunc.signalnotifier.Models.NotificationStyle;
 import com.powerdunc.signalnotifier.Models.StrengthMeasure;
@@ -40,6 +48,7 @@ public class SignalStateListener extends PhoneStateListener {
     SharedPreferences preferences;
     LocationManager locationManager;
     SignalNotifierLocationListener locationListener;
+    NotificationManager notificationManager;
 
     public SignalStateListener(Context context) {
         this.context = context;
@@ -50,6 +59,7 @@ public class SignalStateListener extends PhoneStateListener {
 
         locationListener = new SignalNotifierLocationListener(context);
         locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        notificationManager = (NotificationManager) context.getSystemService(Service.NOTIFICATION_SERVICE);
     }
 
     @SuppressLint("MissingPermission")
@@ -68,8 +78,11 @@ public class SignalStateListener extends PhoneStateListener {
         Log.d(TAG, "Signal strength changed. Current Strength=" + barStrength + ", Last Strength=" + lastStrength);
 
 
+        boolean notifySignalLoss = preferences.getBoolean("notifySignalLoss", false);
+
         if(lastStrength == 0 && barStrength > 0) {
 
+            CreateNotification("Signal Available!", "You have " + barStrength + " bars available.");
             locationListener.SetLastSignalStrength(barStrength);
 
             final NotificationStyle style = NotificationStyle.values()[preferences.getInt("notificationStyle", 0)];
@@ -127,7 +140,7 @@ public class SignalStateListener extends PhoneStateListener {
             vibrateThread.run();
 
 
-        } else if(lastStrength >= 0 && barStrength == 0) {
+        } else if(notifySignalLoss && lastStrength > 0 && barStrength == 0) {
             PlayNotificationSound(1);
         }
 
@@ -176,19 +189,29 @@ public class SignalStateListener extends PhoneStateListener {
     }
 
     public void CreateNotification(String title, String text) {
-        Notification notification = null;
 
-        final Intent emptyIntent = new Intent();
-        PendingIntent pendingIntent = PendingIntent.getActivity(context.getApplicationContext(), 1, emptyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        // prepare intent which is triggered if the
+// notification is selected
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            notification = new Notification.Builder(context.getApplicationContext(), Resources.getSystem().getString(R.string.notificationChannelName))
-                    .setContentTitle(title)
-                    .setContentText(text)
-                    .setContentIntent(pendingIntent)
-                    .build();
+        Intent intent = new Intent(context.getApplicationContext(), MainActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(context.getApplicationContext(), 1, intent, 0);
 
-            ((MobileStrengthService)context).notificationManager.notify(1, notification);
-        }
+// build notification
+// the addAction re-use the same intent to keep the example short
+        Notification n  = new Notification.Builder(context.getApplicationContext())
+                .setContentTitle(title)
+                .setContentText(text)
+                .setSmallIcon(R.drawable.signalnotifier_notif_icon_small)
+                .setContentIntent(pIntent)
+                .setAutoCancel(true).build();
+//                .addAction(R.drawable.icon, "Call", pIntent)
+//                .addAction(R.drawable.icon, "More", pIntent)
+//                .addAction(R.drawable.icon, "And more", pIntent).build();
+
+
+        notificationManager.notify(1, n);
+
+
+
     }
 }

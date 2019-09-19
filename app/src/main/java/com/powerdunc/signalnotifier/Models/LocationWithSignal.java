@@ -1,5 +1,6 @@
 package com.powerdunc.signalnotifier.Models;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.powerdunc.signalnotifier.Annotations.DatabaseAnnotations;
 
 import java.io.Serializable;
@@ -62,6 +63,11 @@ public class LocationWithSignal extends DatabaseObject implements Serializable {
     public String GetCreatedDateAsString()
     {
         return createdDate;
+    }
+
+    public LatLng GetLatLng()
+    {
+        return new LatLng(GetLatitide(), GetLongitude());
     }
 
     public String GetStrengthColor()
